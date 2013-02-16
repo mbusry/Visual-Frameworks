@@ -1,0 +1,60 @@
+/* Main CSS style sheet.  Michael Usry Visual Frameworks Project II  */
+body {
+	background-image: -webkit-gradient(
+	linear,
+	left bottom,
+	left top,
+	color-stop(0.5, #6a6a6a),
+	color-stop(0.14, #ffffff)
+);
+*/
+  background-color:#bbb;
+  letter-spacing:.1em;
+/*
+}
+
+p {
+  font-style:italic;
+  font-family:times,serif;
+}
+
+h1 {
+	margin: 0px;
+	border: 1px solid #000;
+	font-family: Verdana, Geneva, sans-serif;
+	font-size: 22px;
+	font-style: normal;
+	color: black;
+	text-align: center;
+	background-color: #fff;
+	width: 100%;
+
+}
+
+h2 {
+	font-family: Verdana, Geneva, sans-serif;
+	font-size: 22px;
+	font-style: normal;
+	color: gray;
+}
+
+a:link {
+
+	text-decoration: none;
+	color: blue;
+}
+
+a:visited {
+	text-decoration: none;
+	color:blue;
+}
+
+
+legend{
+	font-weight: bold;
+	color:teal;
+}
+
+:focus{
+	border: 1px sold:blue;
+}
