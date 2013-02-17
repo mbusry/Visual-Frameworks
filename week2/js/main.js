@@ -1,69 +1,150 @@
 // JS Visual framkworks Project II
 
-// Global variables
-
-var groceryList 
-var	assignedPerson = document.getElementById("assignedPerson");
-var	email = document.getElementById("email");
-var	shop = document.getElementById("shop");
-var	when = document.getElementById("when");
-var	grocery = document.getElementById("firstForm").groceryItem;
-var	qty = document.getElementById("qty");
-var	notes = document.getElementById("notes");
+// load HTML first
+window.addEventListener("DOMContentLoaded", function(){
 
 
-// Save to local storage
-	var pageHolder = function(){
-	localStorage.setItem("Assigned To", assignedPerson.value);
-	localStorage.setItem("eMail Address", email.value);
-	localStorage.setItem("Where to shop", shop.value);
-	localStorage.setItem("When is it needed", when.value);
-	localStorage.setItem("Assigned To", grocery.value);
-	localStorage.setItem("Quantity to get", qty.value);
-	localStorage.setItem("Notes", notes.value);
-};
+	// getElementByID function
+	function getID(x){
+		var elementID = document.getElementById(x);
+		return elementID;
+	};
 
-var refreshPageData = function(){
-	var assignedPersonKey = localStorage.key("Assigned To");
-	var assignedPersonValue = localStorage.getItem(assignedPersonKey);
-	assignedPerson.value = assignedPersonValue;
-};
+	// Select field elements and populate
+	function fieldElements(){
+		var formTag = document.getElemenetByTagName("form"),
+			selectLi = getID('select'),
+			makeSelect = document.createElement('select');			
+			makeSelect.setAttribute("id","groups");
+		for(var i=0, n=contactGroups.length; i<n; i++){
+			var makeOption = document.createElement('option');
+			var optText = contactGroups[i];
+			makeOption.setAttribute("value", optText);
+			makeOption.innerHTML = optText;
+			makeSelect.appendChild(makeOption);
+		}
+		selectLi.appendChild(makeSelect);
+	};
 
-var isItChecked = function(){
-	for(i=0, n=checkboxes.length; i<n; i++){
-		m=1;
-		if(checkboxes[i].checked){
-		checkboxes[i] = groceryList[m];
-		m++;
-		}	
-	}
-};
-
-
-// creating a unique key
-
-
-
-// save info given in local storage
-
-var saveInfo = function(){
-	localStorage.setItem("Assigned To", assignedPerson.value);
-	localStorage.setItem("eMail Address", email.value);
-	localStorage.setItem("Shopping at", shop.value);
-	localStorage.setItem("When do I need it", when.value);
-	localStorage.setItem("Grocery Items", checkbox.GroceryItem.value);
-	localStorage.setItem("Quanity needed", number.value);
-	localStorage.setItem("Notes", notes.value);
+	// Getting values from my drop down of assignedto
+function getCheckBoxes(){
+	if(getID('groceryItem'.checked)){
+			groceryItemSelected = getID('groceryItem').value;
+		}else{
+			groceryItemSelected = "No";
+		}
+	
 
 };
-// EventListners
-assignedPerson.addEventListener("blur", pageHolder);
-email.addEventListener("blur", pageHolder);
-shop.addEventListener("blur", pageHolder);
-when.addEventListener("blur", pageHolder);
-grocery.addEventListener("blur", pageHolder);
-qty.addEventListener("blur", pageHolder);
-notes.addEventListener("blur", pageHolder);
-assignedPerson.addEventListener("blur", pageHolder);
-saveButton.addEventListener("click", saveInfo)
-refreshPageData();
+	// Global variables
+
+	// var	assignedPerson = getID(assignedPerson);
+	var	email = getID(email);
+	var	shop = getID(shop);
+	var	when = getID(when);
+	var	grocery = getID(firstForm.groceryItem);
+	var	qty = getID(qty);
+	var	notes = getID(notes);
+	var groceryItemSelected = " ";
+
+//  switching page control in css
+	function toggleControls(n){
+		switch(n){
+		case "on":
+		getID('firstForm').style.display = "none";
+		getID('eraseList').style.display = "inline";
+		getID('showList').style.display = "none";
+		getID('addNew').style.display = "inline";
+		break;
+	case "off":
+		getID('firstForm').style.display = "block";
+		getID('eraseList').style.display = "inline";
+		getID('showList').style.display = "inline";
+		getID('addNew').style.display = "none";
+		getID('items').style.display = "none";
+		break;
+	default:
+		return false;
+		}
+	};
+
+	function saveData(){
+		var uniqueKey = Math.floor(Math.random()*100000001)
+		//Collect data in an object with label and 
+	getCheckBoxes();
+
+		var item = {};
+			// item.assigned = ["Assigned to:", assignedToValue];
+			item.email = ["eMail:", getID('email').value];
+			item.shop = ["Shop:", getID('shop').value];
+			item.when = ["When:", getID('when').value];
+			item.qty = ["Quantity:", getID('qty').value];			
+			// item.groceryItem = ["Grocery Item", getID('groceryItemSelected').value];
+			item.notes = ["Notes", getID('notes').value];
+			// Saving object to a string using Stringify
+			localStorage.setItem(uniqueKey, JSON.stringify(item));
+			alert("The List has been saved.");
+
+
+
+		localStorage.setItem("Assigned to", assignedPerson);
+		localStorage.setItem("Email:", email);
+		localStorage.setItem("Where to shop:", shop);
+		localStorage.setItem("When is it needed:", when);
+		// localStorage.setItem("Items needed:", groceryItem);
+		localStorage.setItem("Quantity needed:", qty);
+		localStorage.setItem("Notes:", notes);
+	};
+
+	function getPageData(){
+		toggleControls("on");
+		if(localStorage.length === 0){
+			alert("There is no data.");
+		}
+		// Retrieve data from local storage to display on the browser
+		var makeDiv = document.createElement('div');
+		makeDiv.setAttribute("id", "items");
+		var makeList = document.createElement("ul");
+		makeDiv.appendChild(makeList);
+		document.body.appendChild(makeDiv);
+		getID('items').style.display = 'block';
+		for(i=0, len=localStorage.length;i<len;i++){
+			var makeli = document.createElement("li");
+			makeList.appendChild(makeli);
+			var key = localStorage.key(i);
+			var value = localStorage.getItem(key);
+			// taking the string from local storage and putting it back into objects
+			var obj = JSON.parse(value);
+			var makeSubList = document.createElement('ul');
+			makeli.appendChild(makeSubList);
+		for(var a in obj){
+			var makeSubLi = document.createElement('li');
+			makeSubList.appendChild(makeSubLi);
+			var optSubText = obj[a][0]+ " "+obj[a][1];
+			makeSubLi.innerHTML = optSubText;
+			}
+		}
+	};
+
+	function clearLocal(){
+		if(localStorage.length === 0){
+		alert("There is no data to clear.")
+		}else{
+		localStorage.clear();
+		alert("All to do items have been removed.");
+		window.location.reload();
+		return false;
+		}
+	};
+
+
+	// click on links and save button
+	var save = getID("saveButton");
+	save.addEventListener("click", saveData);
+	var showList = getID('showList');
+	showList.addEventListener("click", getPageData);
+	var eraseList = getID('eraseList');
+	eraseList.addEventListener("click",clearLocal);
+
+//last line of the code.  All of this code is a function
+});
