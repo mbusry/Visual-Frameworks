@@ -1,16 +1,7 @@
 /* Main CSS style sheet.  Michael Usry Visual Frameworks Project II  */
 body {
-	background-image: -webkit-gradient(
-	linear,
-	left bottom,
-	left top,
-	color-stop(0.5, #6a6a6a),
-	color-stop(0.14, #ffffff)
-);
-*/
-  background-color:#bbb;
-  letter-spacing:.1em;
-/*
+	background-color: #a6a6a6;
+	letter-spacing: .2em;
 }
 
 p {
@@ -37,10 +28,20 @@ h2 {
 	font-style: normal;
 	color: gray;
 }
+a {
+	text-decoration: none;
+	letter-spacing: .1em;
+}
 
 a:visited {
 	text-decoration: none;
 	color:blue;
+	letter-spacing: .1em;
+}
+
+a:hover {
+	color:red;
+	letter-spacing: .1em;
 }
 
 

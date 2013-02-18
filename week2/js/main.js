@@ -4,7 +4,7 @@
 window.addEventListener("DOMContentLoaded", function(){
 
 
-	// getElementByID function
+	// getElementByID function shorthand
 	function getID(x){
 		var elementID = document.getElementById(x);
 		return elementID;
@@ -36,18 +36,7 @@ function getCheckBoxes(){
 	
 
 };
-	// Global variables
-
-	// var	assignedPerson = getID(assignedPerson);
-	var	email = getID(email);
-	var	shop = getID(shop);
-	var	when = getID(when);
-	var	grocery = getID(firstForm.groceryItem);
-	var	qty = getID(qty);
-	var	notes = getID(notes);
-	var groceryItemSelected = " ";
-
-//  switching page control in css
+//  switching page control views in css
 	function toggleControls(n){
 		switch(n){
 		case "on":
@@ -67,11 +56,21 @@ function getCheckBoxes(){
 		return false;
 		}
 	};
-
+	// function to find the radio button
+	function getGroceries(){
+		var groc = document.forms[0].groceryItem //looking at the 'html document','form' on the page,'groceryItem' is from the name= in the form for the buttons
+		for(i=0; i<groc.length; i++){
+			if(groc[i].checked){
+			groceryItemValue = groc[i].value;
+			}
+		}
+	};
+	// saving the data from the field inputs to localstorage with a unique key for each page
 	function saveData(){
 		var uniqueKey = Math.floor(Math.random()*100000001)
 		//Collect data in an object with label and 
 	getCheckBoxes();
+	getGroceries();
 
 		var item = {};
 			// item.assigned = ["Assigned to:", assignedToValue];
@@ -79,23 +78,13 @@ function getCheckBoxes(){
 			item.shop = ["Shop:", getID('shop').value];
 			item.when = ["When:", getID('when').value];
 			item.qty = ["Quantity:", getID('qty').value];			
-			// item.groceryItem = ["Grocery Item", getID('groceryItemSelected').value];
-			item.notes = ["Notes", getID('notes').value];
+			item.groceryItem = ["Grocery Item:", groceryItemValue];
+			item.notes = ["Notes:", getID('notes').value];
 			// Saving object to a string using Stringify
 			localStorage.setItem(uniqueKey, JSON.stringify(item));
 			alert("The List has been saved.");
-
-
-
-		localStorage.setItem("Assigned to", assignedPerson);
-		localStorage.setItem("Email:", email);
-		localStorage.setItem("Where to shop:", shop);
-		localStorage.setItem("When is it needed:", when);
-		// localStorage.setItem("Items needed:", groceryItem);
-		localStorage.setItem("Quantity needed:", qty);
-		localStorage.setItem("Notes:", notes);
 	};
-
+// Gets the data from the form on the page.
 	function getPageData(){
 		toggleControls("on");
 		if(localStorage.length === 0){
@@ -125,7 +114,7 @@ function getCheckBoxes(){
 			}
 		}
 	};
-
+// clear local storage function
 	function clearLocal(){
 		if(localStorage.length === 0){
 		alert("There is no data to clear.")
@@ -136,6 +125,17 @@ function getCheckBoxes(){
 		return false;
 		}
 	};
+
+	// Global variables
+
+	// var	assignedPerson = getID(assignedPerson);
+	//var	email = getID(email);
+	//var	shop = getID(shop);
+	//var	when = getID(when);
+	//var	grocery = getID(firstForm.groceryItem);
+	//var	qty = getID(qty);
+	//var	notes = getID(notes);
+	var 	groceryItemValue;
 
 
 	// click on links and save button
