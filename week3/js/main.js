@@ -73,9 +73,11 @@ window.addEventListener("DOMContentLoaded", function(){
 		// Looking to see if there is a key
 		if(!key){
 			var uniqueKey = Math.floor(Math.random()*100000001)
+			alert(uniqueKey);
 		}else{
 		// If there is a key id=key
 			uniqueKey = key;
+			alert(uniqueKey + " There was a key");
 		}
 		//Collect data in an object with label and 
 		//getCheckBoxes();
@@ -106,9 +108,7 @@ window.addEventListener("DOMContentLoaded", function(){
 		makeDiv.appendChild(makeList);
 		
 		document.body.appendChild(makeDiv);
-		getID('items').style.display = 'block';
-		alert(localStorage.length);
-		
+		getID('items').style.display = 'block';		
 		for(i=0, len=localStorage.length;i<len;i++){
 			var makeli = document.createElement("li");
 			var linksLi = document.createElement("li");
@@ -143,7 +143,7 @@ window.addEventListener("DOMContentLoaded", function(){
 		// this section will add a br tag to seperate the links for edit and delete groceries
 		var breakTag = document.createElement('br');
 		linksLi.appendChild(breakTag);
-		
+		 
 		
 		// delete link
 		var deleteLink = document.createElement('a');
@@ -151,9 +151,21 @@ window.addEventListener("DOMContentLoaded", function(){
 		deleteLink.key = key;
 		var deleteText = "Delete Groceries";
 		deleteLink.innerHTML = deleteText;
-		//deleteLink.addEventListener("click", deleteGroceries); // will delete the grocerlist item
+		deleteLink.addEventListener("click", deleteGroceries); // will delete the grocerlist item
 		linksLi.appendChild(deleteLink);
 	};
+	
+	function deleteGroceries(){
+		var ask = confirm("Are you sure you want to delete this?");
+		if(ask){
+			localStorage.removeItem(this.key)
+			alert("It was deleted");
+			window.location.reload();
+		}else{
+			alert("You didn't delete it.");
+		}
+	};
+	
 	// This edits our grocery list
 	function editGroceries(){
 		// Retrieve from local storage
@@ -169,20 +181,20 @@ window.addEventListener("DOMContentLoaded", function(){
 		getID('when').value = item.when[1];
 		getID('qty').value = item.qty[1];
 		 //get the data for the radio buttons
-		var radios = document.forms[0].groceryItemValue
-		for (i=0; i < radios.length; i ++){
-		    if(radios[i].value === "Fruit" && item.groceryItemValue === "Fruit"){
-			radios[i].setAttribute("checked", "checked");
-		    }else if(radios[i].value === "Veggie" && item.groceryItemValue === "Veggie"){
-			radios[i].setAttribute("checked", "checked");
-		    }else if(radios[i].value === "Diary" && item.groceryItemValue === "Diary"){
-			radios[i].setAttribute("checked", "checked");
-		    }else if(radios[i].value === "Meat" && item.groceryItemValue === "Meat"){
-			radios[i].setAttribute("checked", "checked");
-		    }else if(radios[i].value === "Snack" && item.groceryItemValue === "Snack"){
-			radios[i].setAttribute("checked", "checked");
-			}
-		}				
+		//var radios = document.forms[0].groceryItemValue
+		//for (i=0; i < radios.length; i ++){
+		//    if(radios[i].value === "Fruit" && item.groceryItemValue === "Fruit"){
+		//	radios[i].setAttribute("checked", "checked");
+		//    }else if(radios[i].value === "Veggie" && item.groceryItemValue === "Veggie"){
+		//	radios[i].setAttribute("checked", "checked");
+		//    }else if(radios[i].value === "Diary" && item.groceryItemValue === "Diary"){
+		//	radios[i].setAttribute("checked", "checked");
+		//    }else if(radios[i].value === "Meat" && item.groceryItemValue === "Meat"){
+		//	radios[i].setAttribute("checked", "checked");
+		//    }else if(radios[i].value === "Snack" && item.groceryItemValue === "Snack"){
+		//	radios[i].setAttribute("checked", "checked");
+		//	}
+		//}				
 		getID('notes').value = item.notes[1];
 		
 		// removing the addEventListener from the 'save contact' button
@@ -215,7 +227,6 @@ window.addEventListener("DOMContentLoaded", function(){
 		};
 		// If errors, show on the screen we pass the errMsgArry
 		// to the html id=errTxt
-		alert(errMsgArry.length);
 		if(errMsgArry.length >=1){
 			for(var i=0, n=errMsgArry.length; i < n; i++){
 				var txt = document.createElement('li');
@@ -227,7 +238,6 @@ window.addEventListener("DOMContentLoaded", function(){
 		}else{
 			// Save it if no errors
 			// .key comes from editGroceries as
-			alert(this.key);
 			saveData(this.key);
 		}
 	};
@@ -240,8 +250,9 @@ window.addEventListener("DOMContentLoaded", function(){
 		if(localStorage.length === 0){
 		alert("There is no data to clear.")
 		}else{
+			
 		localStorage.clear();
-		alert("All to do items have been removed.");
+		alert("All items have been removed.");
 		window.location.reload();
 		return false;
 		}
