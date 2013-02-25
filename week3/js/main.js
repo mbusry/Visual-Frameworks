@@ -25,17 +25,6 @@ window.addEventListener("DOMContentLoaded", function(){
 		}
 		selectLi.appendChild(makeSelect);
 	};
-
-	//// Getting values from check boxes
-	//function getCheckBoxes(){
-	//	if(getID('groceryItem'.checked)){
-	//		groceryItemSelected = getID('groceryItem').value;
-	//	}else{
-	//		groceryItemSelected = "No";
-	//	}
-	//
-	//
-	//};
 	
 	//  switching page control views in css
 	function toggleControls(n){
@@ -57,6 +46,7 @@ window.addEventListener("DOMContentLoaded", function(){
 		return false;
 		}
 	};
+	
 	// function to find the radio button
 	function getGroceries(){
 		var groc = document.forms[0].groceryItem
@@ -68,16 +58,17 @@ window.addEventListener("DOMContentLoaded", function(){
 			}
 		}
 	};
+	
 	// saving the data from the field inputs to localstorage with a unique key for each page
 	function saveData(key){
 		// Looking to see if there is a key
 		if(!key){
 			var uniqueKey = Math.floor(Math.random()*100000001)
-			alert(uniqueKey);
+			//alert(uniqueKey);
 		}else{
 		// If there is a key id=key
 			uniqueKey = key;
-			alert(uniqueKey + " There was a key");
+			//alert(uniqueKey + " There was a key");
 		}
 		//Collect data in an object with label and 
 		//getCheckBoxes();
@@ -95,6 +86,7 @@ window.addEventListener("DOMContentLoaded", function(){
 			localStorage.setItem(uniqueKey, JSON.stringify(item));
 			alert("The List has been saved.");
 	};
+	
 	// Gets the data from the form on the page.
 	function getPageData(){
 		toggleControls("on");
@@ -108,17 +100,22 @@ window.addEventListener("DOMContentLoaded", function(){
 		makeDiv.appendChild(makeList);
 		
 		document.body.appendChild(makeDiv);
-		getID('items').style.display = 'block';		
+		getID('items').style.display = 'block';
+		// runs for every item
 		for(i=0, len=localStorage.length;i<len;i++){
 			var makeli = document.createElement("li");
 			var linksLi = document.createElement("li");
 			makeList.appendChild(makeli);
 			var key = localStorage.key(i);
+			alert(key + " localStorage.key(i) line 110");
 			var value = localStorage.getItem(key);
+			alert(key + " localStorage.getItem(key) line 111");
+
 			// taking the string from local storage and putting it back into objects
 			var obj = JSON.parse(value);
 			var makeSubList = document.createElement('ul');
 			makeli.appendChild(makeSubList);
+			// this loop is for every subitme
 			for(var a in obj){
 				var makeSubLi = document.createElement('li');
 				makeSubList.appendChild(makeSubLi);
@@ -126,7 +123,9 @@ window.addEventListener("DOMContentLoaded", function(){
 				makeSubLi.innerHTML = optSubText;
 				makeSubList.appendChild(linksLi);
 			}
-			makeGrocLinks(localStorage.key(i), linksLi); //Creates edit and delete links in each item for local storage.  This is in the loop for the grocery list NOT the items.
+			makeGrocLinks(localStorage.key(i), linksLi);
+			//Creates edit and delete links in each item for local storage.
+			//This is in the loop for the grocery list NOT the items.
 		}
 	};
 	
@@ -170,31 +169,17 @@ window.addEventListener("DOMContentLoaded", function(){
 	function editGroceries(){
 		// Retrieve from local storage
 		var value = localStorage.getItem(this.key);
-		var item = JSON.parse(value); // the opposite of stringify
+		// the opposite of stringify
+		var item = JSON.parse(value); 
 		
 		// Hide displayed items and show the form
 		toggleControls("off");
 		
 		// fill in the form with localStorage
-		//getID('assigned').value = item.assigned[1];
+		// getID('assigned').value = item.assigned[1];
 		getID('shop').value = item.shop[1];
 		getID('when').value = item.when[1];
 		getID('qty').value = item.qty[1];
-		 //get the data for the radio buttons
-		//var radios = document.forms[0].groceryItemValue
-		//for (i=0; i < radios.length; i ++){
-		//    if(radios[i].value === "Fruit" && item.groceryItemValue === "Fruit"){
-		//	radios[i].setAttribute("checked", "checked");
-		//    }else if(radios[i].value === "Veggie" && item.groceryItemValue === "Veggie"){
-		//	radios[i].setAttribute("checked", "checked");
-		//    }else if(radios[i].value === "Diary" && item.groceryItemValue === "Diary"){
-		//	radios[i].setAttribute("checked", "checked");
-		//    }else if(radios[i].value === "Meat" && item.groceryItemValue === "Meat"){
-		//	radios[i].setAttribute("checked", "checked");
-		//    }else if(radios[i].value === "Snack" && item.groceryItemValue === "Snack"){
-		//	radios[i].setAttribute("checked", "checked");
-		//	}
-		//}				
 		getID('notes').value = item.notes[1];
 		
 		// removing the addEventListener from the 'save contact' button
@@ -207,6 +192,7 @@ window.addEventListener("DOMContentLoaded", function(){
 		// saving the key value so we can save edited groceries
 		editSubmit.addEventListener("click", validate);
 		editSubmit.key = this.key;
+		//alert ("this.key value from editGroceries);
 	}
 		
 	function validate(e){
@@ -236,15 +222,12 @@ window.addEventListener("DOMContentLoaded", function(){
 			e.preventDefault();
 			return false;
 		}else{
-			// Save it if no errors
+			// Save if no errors
 			// .key comes from editGroceries as
 			saveData(this.key);
 		}
 	};
 		
-		
-	
-	
 	// clear local storage function
 	function clearLocal(){
 		if(localStorage.length === 0){

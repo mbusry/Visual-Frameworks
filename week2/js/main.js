@@ -58,7 +58,8 @@ function getCheckBoxes(){
 	};
 	// function to find the radio button
 	function getGroceries(){
-		var groc = document.forms[0].groceryItem //looking at the 'html document','form' on the page,'groceryItem' is from the name= in the form for the buttons
+		var groc = document.forms[0].groceryItem
+		//looking at the 'html document','form' on the page,'groceryItem' is from the name= in the form for the buttons
 		for(i=0; i<groc.length; i++){
 			if(groc[i].checked){
 			groceryItemValue = groc[i].value;
