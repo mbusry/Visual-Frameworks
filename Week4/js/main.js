@@ -92,14 +92,13 @@ window.addEventListener("DOMContentLoaded", function(){
 		toggleControls("on");
 		if(localStorage.length === 0){
 			alert("There is no data.  Loading default data.");
-			defaultData();
+			//defaultData();
 		}
 		// Retrieve data from local storage to display on the browser
 		var makeDiv = document.createElement('div');
 		makeDiv.setAttribute("id", "items");
 		var makeList = document.createElement("ul");
 		makeDiv.appendChild(makeList);
-		
 		document.body.appendChild(makeDiv);
 		getID('items').style.display = 'block';
 		// runs for every item
@@ -116,6 +115,7 @@ window.addEventListener("DOMContentLoaded", function(){
 			var obj = JSON.parse(value);
 			var makeSubList = document.createElement('ul');
 			makeli.appendChild(makeSubList);
+			getImage(obj.group[1],makeSubList);
 			// this loop is for every subitme
 			for(var a in obj){
 				var makeSubLi = document.createElement('li');
@@ -128,6 +128,14 @@ window.addEventListener("DOMContentLoaded", function(){
 			//Creates edit and delete links in each item for local storage.
 			//This is in the loop for the grocery list NOT the items.
 		}
+	};
+	// Getting image for the person assigned to
+	function getImage(assignedName, makeSubList){
+		var imageLi = document.createElement('li');
+		makeSubList.appendChild(imageLi);
+		var newImage = document.createElement('img');
+		var setSrc = newImage.setAttribute("src", "/images/" + assignedName + ".png");
+		imageLi.appendChild(newImage);
 	};
 	
 	// Loading default data from json.js from additem.html
