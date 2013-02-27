@@ -113,10 +113,13 @@ window.addEventListener("DOMContentLoaded", function(){
 
 			// taking the string from local storage and putting it back into objects
 			var obj = JSON.parse(value);
+			//alert(obj);
 			var makeSubList = document.createElement('ul');
 			makeli.appendChild(makeSubList);
-			getImage(obj.group[1],makeSubList);
-			// this loop is for every subitme
+			//alert(obj.)
+			getImage(obj.assigned[1],makeSubList);
+			//alert(getImage);
+			// this loop is for every subitem
 			for(var a in obj){
 				var makeSubLi = document.createElement('li');
 				makeSubList.appendChild(makeSubLi);
@@ -134,7 +137,7 @@ window.addEventListener("DOMContentLoaded", function(){
 		var imageLi = document.createElement('li');
 		makeSubList.appendChild(imageLi);
 		var newImage = document.createElement('img');
-		var setSrc = newImage.setAttribute("src", "/images/" + assignedName + ".png");
+		var setSrc = newImage.setAttribute("src", "images/" + assignedName + ".png");
 		imageLi.appendChild(newImage);
 	};
 	
