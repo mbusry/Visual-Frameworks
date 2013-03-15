@@ -64,14 +64,11 @@ window.addEventListener("DOMContentLoaded", function(){
 		// Looking to see if there is a key
 		if(!key){
 			var uniqueKey = Math.floor(Math.random()*100000001)
-			//alert(uniqueKey);
 		}else{
 		// If there is a key id=key
 			uniqueKey = key;
-			//alert(uniqueKey + " There was a key");
 		}
 		//Collect data in an object with label and 
-		//getCheckBoxes();
 		getGroceries();
 
 		var item = {};
@@ -92,7 +89,7 @@ window.addEventListener("DOMContentLoaded", function(){
 		toggleControls("on");
 		if(localStorage.length === 0){
 			alert("There is no data.  Loading default data.");
-			//defaultData();
+			loadDefaultData();
 		}
 		// Retrieve data from local storage to display on the browser
 		var makeDiv = document.createElement('div');
@@ -100,25 +97,19 @@ window.addEventListener("DOMContentLoaded", function(){
 		var makeList = document.createElement("ul");
 		makeDiv.appendChild(makeList);
 		document.body.appendChild(makeDiv);
-		getID('items').style.display = 'block';
+		getID('items').style.display = "block";
 		// runs for every item
 		for(i=0, len=localStorage.length;i<len;i++){
 			var makeli = document.createElement("li");
 			var linksLi = document.createElement("li");
 			makeList.appendChild(makeli);
 			var key = localStorage.key(i);
-			//alert(key + " localStorage.key(i) line 110");
 			var value = localStorage.getItem(key);
-			//alert(key + " localStorage.getItem(key) line 111");
-
 			// taking the string from local storage and putting it back into objects
 			var obj = JSON.parse(value);
-			//alert(obj);
 			var makeSubList = document.createElement('ul');
 			makeli.appendChild(makeSubList);
-			//alert(obj.)
 			getImage(obj.assigned[1],makeSubList);
-			//alert(getImage);
 			// this loop is for every subitem
 			for(var a in obj){
 				var makeSubLi = document.createElement('li');
@@ -142,10 +133,10 @@ window.addEventListener("DOMContentLoaded", function(){
 	};
 	
 	// Loading default data from json.js from additem.html
-	function defaultData(){
+	function loadDefaultData(){
 		for(var i in json){
-			var key = Math.floor(Math.random()*100000001);
-			localStorage.setItem(key.JSON.stringify(json[i]));
+			var uniqueKey = Math.floor(Math.random()*100000001);
+			localStorage.setItem(uniqueKey,JSON.stringify(json[i]));
 		}
 	};
 	
@@ -196,7 +187,8 @@ window.addEventListener("DOMContentLoaded", function(){
 		toggleControls("off");
 		
 		// fill in the form with localStorage
-		// getID('assigned').value = item.assigned[1];
+		getID('assigned').value = item.assigned[1];
+		getID('email').value = item.assigned[1];
 		getID('shop').value = item.shop[1];
 		getID('when').value = item.when[1];
 		getID('qty').value = item.qty[1];
@@ -212,7 +204,6 @@ window.addEventListener("DOMContentLoaded", function(){
 		// saving the key value so we can save edited groceries
 		editSubmit.addEventListener("click", validate);
 		editSubmit.key = this.key;
-		//alert ("this.key value from editGroceries);
 	}
 		
 	function validate(e){

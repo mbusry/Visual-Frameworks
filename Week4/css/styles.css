@@ -1,4 +1,9 @@
 /* Main CSS style sheet.  Michael Usry Visual Frameworks Project II  */
+
+* 	{
+	list-style: none;
+}
+
 body {
 	background-color: #a6a6a6;
 	letter-spacing: .1em;
